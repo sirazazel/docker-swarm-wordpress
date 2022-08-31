@@ -21,6 +21,11 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - nw-backend
+    placement:
+      constraints:
+        - node.role == manager
+        - node.hostname ==caddy
+
 
   wordpress:
     image: wordpress:5-php7.4-fpm-alpine
@@ -51,6 +56,10 @@ services:
       - ./apps/wordpress/php.ini:/usr/local/etc/php/php.ini
     networks:
       - nw-backend
+    placement:
+      constraints:
+        - node.role == manager
+        - node.hostname ==caddy
 
   nginx:
     image: iiriix/nginx-wp:latest
@@ -99,6 +108,10 @@ services:
     networks:
       - nw-backend
       - nw-web
+    placement:
+      constraints:
+        - node.role == manager
+        - node.hostname ==caddy
 
   traefik:
     image: traefik:2.2
