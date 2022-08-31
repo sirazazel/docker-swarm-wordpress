@@ -138,18 +138,19 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.swarmMode=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.directory=/etc/traefik/dynamic_conf"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.websecure.http.tls=true"
-      ## Certificate Resolver: cloudflare, type=dnsChallenge
-      - "--certificatesResolvers.myCloudflare.acme.email=postmaster@espardenya.me"
-      - "--certificatesResolvers.myCloudflare.acme.storage=/data/acme.json"
-      - "--certificatesResolvers.myCloudflare.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # Staging. Comment this for Production.
-      - "--certificatesResolvers.myCloudflare.acme.dnsChallenge=true"
-      - "--certificatesResolvers.myCloudflare.acme.dnsChallenge.provider=cloudflare"
-      - "--certificatesResolvers.myCloudflare.acme.dnsChallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
-    environment:
-      CF_DNS_API_TOKEN: ${TOKEN}
+    #   ## Certificate Resolver: cloudflare, type=dnsChallenge
+    #   - "--certificatesResolvers.myCloudflare.acme.email=postmaster@espardenya.me"
+    #   - "--certificatesResolvers.myCloudflare.acme.storage=/data/acme.json"
+    #   - "--certificatesResolvers.myCloudflare.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # Staging. Comment this for Production.
+    #   - "--certificatesResolvers.myCloudflare.acme.dnsChallenge=true"
+    #   - "--certificatesResolvers.myCloudflare.acme.dnsChallenge.provider=cloudflare"
+    #   - "--certificatesResolvers.myCloudflare.acme.dnsChallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
+    # environment:
+    #   CF_DNS_API_TOKEN: ${TOKEN}
     ports:
       - published: 80
         target: 80
@@ -162,6 +163,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - letsencrypt_data:/data
+      - certs:/certs:ro
+      - ./apps/traefik/config.yml:/etc/traefik/dynamic_conf/conf.yml:ro
     networks:
       - nw-web
 
@@ -184,6 +187,12 @@ volumes:
        o: bind
        type: none
        device: /mnt/data/letsencrypt_data
+  certs:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: /mnt/data/letsencrypt_data/cert_traefik
 
 networks:
   nw-web:

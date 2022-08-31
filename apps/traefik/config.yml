@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /certs/espardenya.pem
+      keyFile: /certs/espardenya.key
