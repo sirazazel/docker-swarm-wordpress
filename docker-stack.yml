@@ -168,19 +168,19 @@ volumes:
     driver_opts:
        o: bind
        type: none
-       device: /data/wp_data
+       device: /mnt/data/wp_data
   mysql_data:
     driver: local
     driver_opts:
        o: bind
        type: none
-       device: /data/mysql_data
+       device: /mnt/data/mysql_data
   letsencrypt_data:
     driver: local
     driver_opts:
        o: bind
        type: none
-       device: /data/letsencrypt_data
+       device: /mnt/data/letsencrypt_data
 
 networks:
   nw-web:
