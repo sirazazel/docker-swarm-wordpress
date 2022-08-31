@@ -79,17 +79,17 @@ services:
         - "traefik.http.middlewares.www-redir.redirectregex.permanent=true"
         ### Entrypoints
         # web
-        - "traefik.http.routers.myrouter-01.rule=Host(`example.com`, `www.example.com`)"
+        - "traefik.http.routers.myrouter-01.rule=Host(`espardenya.me`, `www.espardenya.me`)"
         - "traefik.http.routers.myrouter-01.entrypoints=web"
         - "traefik.http.routers.myrouter-01.middlewares=https-redir@docker"
         # websecure
-        - "traefik.http.routers.myrouter-02.rule=Host(`example.com`, `www.example.com`)"
+        - "traefik.http.routers.myrouter-02.rule=Host(`espardenya.me`, `www.espardenya.me`)"
         - "traefik.http.routers.myrouter-02.entrypoints=websecure"
         - "traefik.http.routers.myrouter-02.middlewares=www-redir@docker"
         - "traefik.http.routers.myrouter-02.tls=true"
         - "traefik.http.routers.myrouter-02.tls.certresolver=myCloudflare"
-        - "traefik.http.routers.myrouter-02.tls.domains[0].main=example.com"
-        - "traefik.http.routers.myrouter-02.tls.domains[0].sans=*.example.com"
+        - "traefik.http.routers.myrouter-02.tls.domains[0].main=espardenya.me"
+        - "traefik.http.routers.myrouter-02.tls.domains[0].sans=*.espardenya.me"
     depends_on:
       - wordpress
     volumes:
@@ -113,16 +113,16 @@ services:
         delay: 10s
         max_attempts: 10
         window: 15s
-      # ### Traefik Gui. Uncomment to get access on traefik.example.com.
-      # labels:
-        # - "traefik.enable=true"
-        # - "traefik.http.services.traefik-gui.loadbalancer.server.port=8080"
-        # - "traefik.http.routers.traefik-gui.rule=Host(`traefik.example.com`)"
-        # - "traefik.http.routers.traefik-gui.entrypoints=websecure"
-        # - "traefik.http.routers.traefik-gui.service=api@internal"
-        # - "traefik.http.routers.traefik-gui.middlewares=traefik-gui-auth"
-        # - "traefik.http.middlewares.traefik-gui-auth.basicauth.realm=MyPrivateRealm"
-        # - "traefik.http.middlewares.traefik-gui-auth.basicauth.users=admin:$$apr1$$QsWBfEvl$$kY0SCysYUjo4qQSnKGh8s." # user:admin, pass:admin
+      ### Traefik Gui. Uncomment to get access on traefik.espardenya.me.
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.services.traefik-gui.loadbalancer.server.port=8080"
+        - "traefik.http.routers.traefik-gui.rule=Host(`traefik.espardenya.me`)"
+        - "traefik.http.routers.traefik-gui.entrypoints=websecure"
+        - "traefik.http.routers.traefik-gui.service=api@internal"
+        - "traefik.http.routers.traefik-gui.middlewares=traefik-gui-auth"
+        - "traefik.http.middlewares.traefik-gui-auth.basicauth.realm=MyPrivateRealm"
+        - "traefik.http.middlewares.traefik-gui-auth.basicauth.users=admin:$$apr1$$QsWBfEvl$$kY0SCysYUjo4qQSnKGh8s." # user:admin, pass:admin
       placement:
         constraints:
           - node.role == manager
@@ -139,14 +139,14 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.websecure.http.tls=true"
       ## Certificate Resolver: cloudflare, type=dnsChallenge
-      - "--certificatesResolvers.myCloudflare.acme.email=postmaster@example.com"
+      - "--certificatesResolvers.myCloudflare.acme.email=postmaster@espardenya.me"
       - "--certificatesResolvers.myCloudflare.acme.storage=/data/acme.json"
       - "--certificatesResolvers.myCloudflare.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # Staging. Comment this for Production.
       - "--certificatesResolvers.myCloudflare.acme.dnsChallenge=true"
       - "--certificatesResolvers.myCloudflare.acme.dnsChallenge.provider=cloudflare"
       - "--certificatesResolvers.myCloudflare.acme.dnsChallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
     environment:
-      CF_DNS_API_TOKEN: cloudflare_api_token
+      CF_DNS_API_TOKEN: my_api_token
     ports:
       - published: 80
         target: 80
