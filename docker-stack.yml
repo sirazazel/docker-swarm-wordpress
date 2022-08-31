@@ -126,6 +126,7 @@ services:
       placement:
         constraints:
           - node.role == manager
+          - node.hostname ==caddy
     command:
       - "--log=true"
       - "--log.level=warn" # PANIC, FATAL, ERROR, WARN, INFO, DEBUG
