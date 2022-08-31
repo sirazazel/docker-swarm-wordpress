@@ -87,10 +87,10 @@ services:
         - "traefik.http.routers.myrouter-02.rule=Host(`espardenya.me`, `www.espardenya.me`)"
         - "traefik.http.routers.myrouter-02.entrypoints=websecure"
         - "traefik.http.routers.myrouter-02.middlewares=www-redir@docker"
-        - "traefik.http.routers.myrouter-02.tls=true"
-        - "traefik.http.routers.myrouter-02.tls.certresolver=myCloudflare"
-        - "traefik.http.routers.myrouter-02.tls.domains[0].main=espardenya.me"
-        - "traefik.http.routers.myrouter-02.tls.domains[0].sans=*.espardenya.me"
+        # - "traefik.http.routers.myrouter-02.tls=true"
+        # - "traefik.http.routers.myrouter-02.tls.certresolver=myCloudflare"
+        # - "traefik.http.routers.myrouter-02.tls.domains[0].main=espardenya.me"
+        # - "traefik.http.routers.myrouter-02.tls.domains[0].sans=*.espardenya.me"
     depends_on:
       - wordpress
     volumes:
