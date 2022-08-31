@@ -170,25 +170,21 @@ services:
 
 volumes:
   wp_data:
-    driver: local
     driver_opts:
        o: "addr=172.16.0.100,nolock,soft,rw"
        type: nfs
        device: ":/mnt/data/wp_data"
   mysql_data:
-    driver: local
     driver_opts:
        o: "addr=172.16.0.100,nolock,soft,rw"
        type: nfs
        device: ":/mnt/data/mysql_data"
   letsencrypt_data:
-    driver: local
     driver_opts:
        o: "addr=172.16.0.100,nolock,soft,rw"
        type: nfs
        device: ":/mnt/data/letsencrypt_data"
   certs:
-    driver: local
     driver_opts:
        o: "addr=172.16.0.100,nolock,soft,rw"
        type: nfs
