@@ -21,11 +21,6 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - nw-backend
-    placement:
-      constraints:
-        - node.role == manager
-        - node.hostname ==caddy
-
 
   wordpress:
     image: wordpress:5-php7.4-fpm-alpine
